@@ -21,5 +21,7 @@ workaround </span>, but it doesn’t seem to show up on GitHub…
 ## A bit more text
 
 Here’s some more text that I wrote. Wow, look at this programmer right
-here. It’s like I’m in *Hackers*. I’m basically 1995 [angelina
-jolie](https://www.imdb.com/title/tt0113243/mediaviewer/rm4164453632/)
+here. It’s like I’m in *Hackers*. I’m basically 1995 angelina jolie
+
+![angelina
+jolie](/MICR%20575/Homework/MICR_575/hw_1_files/hackers1995.jpg)
