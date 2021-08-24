@@ -10,7 +10,7 @@ supported in markdown. I can <ins>only use basic html tags if I’m
 knitting to html</ins>. [This Stack Overflow
 post](https://stackoverflow.com/questions/63691866/underline-in-rmarkdown-to-microsoft-word)
 suggests using <span style="text-decoration:underline"> this html5
-workaround </span>.
+workaround </span>, but it doesn’t seem to show up on GitHub…
 
 ``` r
 2+2
