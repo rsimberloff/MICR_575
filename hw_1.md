@@ -6,8 +6,11 @@ Homework 1
 Here’s some text that I wrote. It isn’t much, but at least I know how to
 **bold** and *italicize* things. The instrucitons also say to underline
 some text, but Google claims that underline is <u>not</u> natively
-supported in markdown. I can <ins>only use html tags if I’m knitting to
-html</ins>.
+supported in markdown. I can <ins>only use basic html tags if I’m
+knitting to html</ins>. [This Stack Overflow
+post](https://stackoverflow.com/questions/63691866/underline-in-rmarkdown-to-microsoft-word)
+suggests using <span style="text-decoration:underline"> this html5
+workaround </span>.
 
 ``` r
 2+2
@@ -18,5 +21,5 @@ html</ins>.
 ## A bit more text
 
 Here’s some more text that I wrote. Wow, look at this programmer right
-here. It’s like I’m in *Hackers* (1995). I’m basically [angelina
+here. It’s like I’m in *Hackers*. I’m basically 1995 [angelina
 jolie](https://www.imdb.com/title/tt0113243/mediaviewer/rm4164453632/)
