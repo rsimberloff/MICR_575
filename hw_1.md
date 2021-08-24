@@ -24,4 +24,4 @@ Here’s some more text that I wrote. Wow, look at this programmer right
 here. It’s like I’m in *Hackers*. I’m basically 1995 angelina jolie
 
 ![angelina
-jolie](/Users/ruthsimberloff/Documents/Work/MICR%20575/Homework/MICR_575/hackers1995.jpg)
+jolie](https://github.com/rsimberloff/MICR_575/blob/master/hackers1995.jpg?raw=true)
