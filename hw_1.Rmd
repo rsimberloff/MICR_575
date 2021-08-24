@@ -13,4 +13,6 @@ Here's some text that I wrote. It isn't much, but at least I know how to **bold*
 
 ## A bit more text
 
-Here's some more text that I wrote. Wow, look at this programmer right here. It's like I'm in *Hackers*. I'm basically 1995 [angelina jolie](https://www.imdb.com/title/tt0113243/mediaviewer/rm4164453632/)
+Here's some more text that I wrote. Wow, look at this programmer right here. It's like I'm in *Hackers*. I'm basically 1995 angelina jolie  
+
+![angelina jolie](/Users/ruthsimberloff/Documents/Work/MICR 575/Homework/MICR_575/hackers1995.jpg)
