@@ -1,0 +1,50 @@
+---
+title: "Homework 2"
+output: github_document
+---
+
+```{r setup, message=FALSE}
+
+# If it's the first time you've ever used the package:
+# install.packages("tidyverse")
+
+# Load the tidyverse
+library(tidyverse)
+```
+
+```{r explore_the_dataframe}
+
+glimpse(mpg) # A better tidyverse way to inspect the tibble
+
+
+
+```
+
+``` {r visualize_some_data}
+ggplot (data = mpg) +
+  geom_jitter(mapping = aes(x=class, y=cty, color = as.character(cyl)), alpha=.8, size=2, width = .2) +
+  scale_color_ordinal() +
+  theme_dark() +
+  theme(panel.grid.major.x = element_blank()) +
+  labs(
+    color = "Number of cylinders",
+    x = "Vehicle class",
+    y = "Miles per gallon (city)"
+  )
+
+
+```
+
+```{r}
+
+ggplot (data = mpg) +
+  geom_jitter(mapping = aes(x=as.character(cyl), y=displ, color = cty), size=2.5, width = .18) +
+  scale_color_viridis_c() +
+  theme_light() +
+  labs(
+    color = "Miles per gallon (city)",
+    x = "Number of cylinders",
+    y = "Engine displacement (liters)"
+  )
+
+```

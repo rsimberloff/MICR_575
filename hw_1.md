@@ -4,7 +4,7 @@ Homework 1
 ## A bit of text
 
 Here’s some text that I wrote. It isn’t much, but at least I know how to
-**bold** and *italicize* things. The instrucitons also say to underline
+**bold** and *italicize* things. The instructions also say to underline
 some text, but Google claims that underline is <u>not</u> natively
 supported in markdown. I can <ins>only use basic html tags if I’m
 knitting to html</ins>. [This Stack Overflow
