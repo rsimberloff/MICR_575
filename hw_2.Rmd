@@ -4,6 +4,8 @@ output: github_document
 ---
 
 Here I am using the `mpg` dataset to investigate how gas mileage varies among cars of different classes.
+
+### Load Tidyverse
 ```{r setup, message=FALSE}
 
 # If it's the first time you've ever used the package:
@@ -13,8 +15,7 @@ Here I am using the `mpg` dataset to investigate how gas mileage varies among ca
 library(tidyverse)
 ```
 
-
-The first step is to take a look at the data.
+### Inspect data
 ```{r explore_the_dataframe}
 
 glimpse(mpg) # A tidyverse way to inspect the tibble
@@ -23,8 +24,9 @@ glimpse(mpg) # A tidyverse way to inspect the tibble
 
 ```
 
-Next I plot mileage against vehicle class. I also consider the number of cylinders, since this a variable that affects mileage and varies among vehicle classes.
-```{r visualize_some_data}
+### Visualize data
+Here I plot mileage against vehicle class. I also consider the number of cylinders, since this a variable that affects mileage and varies among vehicle classes.
+```{r, message=FALSE}
 ggplot (data = mpg) +
   geom_jitter(mapping = aes(x=class, y=cty, color = as.character(cyl)), alpha=.8, size=2, width = .2) +
   scale_color_ordinal() +
@@ -39,7 +41,7 @@ ggplot (data = mpg) +
 
 ```
 
-This plot indicates that there are distinct patterns in the mileage of different vehicle classes, though there is overlap among all classes. For instance, the worst gas mileage is seen in pickup trucks and SUVs and the best in compact and subcompact cars. However, from looking at this plot I would probably conclude that the number of  cylinders is a more important determinant of gas mileage than vehicle class.
+This plot indicates that there are distinct patterns in the mileage of different vehicle classes, though there is overlap among all classes. However, from looking at this plot I would probably conclude that the number of  cylinders is a more important determinant of gas mileage than vehicle class.
 
 
 ```{r, include=FALSE}
