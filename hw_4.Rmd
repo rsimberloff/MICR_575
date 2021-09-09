@@ -1,0 +1,39 @@
+---
+title: "Homework 4"
+output: github_document
+---
+
+## Setup
+```{r setup}
+library(tidyverse)
+library(nycflights13)
+```
+
+## Exercises
+#### Exercise 1
+``` {r}
+a <- 3  ## a gets the value 3
+b <- 2  ## b gets the value 2
+a+b  ## print a + b
+```
+
+#### Exercise 2
+``` {r}
+sum(a,b)
+```
+
+#### Exercise 3
+
+First I subset the `flights` dataframe using the `dplyr` function `filter()`.
+``` {r}
+(AA_flights <- filter(flights, carrier == "AA"))  ## creates a new dataframe with only American Airlines flights
+```
+
+Now I can make a scatterplot of arrival delay versus departure delay for only American Airlines flights:
+```{r}
+ggplot(data = AA_flights) +
+  geom_point(mapping = aes(x = dep_delay, y = arr_delay), size = 0.5 ,alpha = 0.4) +
+  labs(subtitle = "American Airlines flights that departed from NYC in 2013",
+       x = "Departure delay (minutes)", 
+       y = "Arrival delay (minutes)")
+```
