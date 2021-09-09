@@ -35,5 +35,6 @@ ggplot(data = AA_flights) +
   geom_point(mapping = aes(x = dep_delay, y = arr_delay), size = 0.5 ,alpha = 0.4) +
   labs(subtitle = "American Airlines flights that departed from NYC in 2013",
        x = "Departure delay (minutes)", 
-       y = "Arrival delay (minutes)")
+       y = "Arrival delay (minutes)") +
+  theme_light()
 ```
