@@ -47,13 +47,13 @@ largest.by.clarity
 ```{r}
 # First, a plot of x vs. y
 ggplot(diamonds) +
-  geom_point(mapping = aes(x = x, y = y)) +
-  labs(x = "Length (mm)", y = "Width (mm)")
+  geom_point(mapping = aes(y = x, x = y)) +
+  labs(y = "Length (mm)", x = "Width (mm)")
 
 # Next, a plot of x vs. z
 ggplot(diamonds) +
-  geom_point(mapping = aes(x = x, y = z)) +
-  labs(x = "Length (mm)", y = "Depth (mm)")
+  geom_point(mapping = aes(y = x, x = z)) +
+  labs(y = "Length (mm)", x = "Depth (mm)")
 
 ```
   
