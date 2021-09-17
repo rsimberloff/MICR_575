@@ -1,0 +1,65 @@
+---
+title: "Homework 5"
+output: github_document
+---
+### Setup
+```{r}
+# Load the tidyverse
+library(tidyverse) 
+
+# Look at the data
+glimpse(diamonds)
+```
+  
+### 1. Print a data frame that contains the simple count of diamonds in each cut
+```{r}
+# count(group_by(diamonds,cut))
+# piped:
+cut_summary <- diamonds %>%
+                group_by(cut) %>%
+                  count()
+cut_summary
+```
+
+  
+### 2. Use dplyr to create a df that contains 1% of the rows of `diamonds`, randomly subsetted
+```{r}
+random_subset <- diamonds %>%
+                  slice_sample(prop = 0.01) 
+# slices out a random selection of rows, 0.01 the size of the original data frame
+
+glimpse(random_subset)
+
+```
+
+  
+### 3. Calculate the average size of the 100 largest diamonds in each clarity category
+```{r}
+largest.by.clarity <- diamonds %>%
+                      group_by(clarity) %>%
+                      slice_max(carat, n = 100, with_ties = FALSE) %>%  # takes the 100 top values by carat
+                      summarise(mean.size = mean(carat, na.rm = TRUE))  # makes a summary df of average carats
+
+largest.by.clarity
+```
+  
+### 4. Make scatterplots of dimensions
+```{r}
+# First, a plot of x vs. y
+ggplot(diamonds) +
+  geom_point(mapping = aes(x = x, y = y)) +
+  labs(x = "Length (mm)", y = "Width (mm)")
+
+# Next, a plot of x vs. z
+ggplot(diamonds) +
+  geom_point(mapping = aes(x = x, y = z)) +
+  labs(x = "Length (mm)", y = "Depth (mm)")
+
+```
+  
+### 5. Create a new data frame, with these questionable points removed
+```{r}
+sans_outliers <- diamonds %>%
+                  filter(x > 3 & y < 50 & z < 30) # filtering out the most extreme outliers in the plots above
+```
+I left some less extreme outliers because I dunno what's normal for diamonds. Maybe they can be long and skinny like a hotdog? I doubt it but I do hope so
