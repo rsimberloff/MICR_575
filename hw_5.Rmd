@@ -3,7 +3,7 @@ title: "Homework 5"
 output: github_document
 ---
 ### Setup
-```{r}
+```{r, message=FALSE}
 # Load the tidyverse
 library(tidyverse) 
 
