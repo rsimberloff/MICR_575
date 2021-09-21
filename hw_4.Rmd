@@ -4,7 +4,7 @@ output: github_document
 ---
 
 ## Setup
-```{r setup}
+```{r setup, message=FALSE}
 library(tidyverse)
 library(nycflights13)
 ```
@@ -30,7 +30,7 @@ First I subset the `flights` dataframe using the `dplyr` function `filter()`.
 ```
 
 Now I can make a scatterplot of arrival delay versus departure delay for only American Airlines flights:
-```{r}
+```{r, warning=FALSE}
 ggplot(data = AA_flights) +
   geom_point(mapping = aes(x = dep_delay, y = arr_delay), size = 0.5 ,alpha = 0.4) +
   labs(subtitle = "American Airlines flights that departed from NYC in 2013",
