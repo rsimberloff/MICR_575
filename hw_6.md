@@ -3,11 +3,30 @@ Homework 6: Data Visualization
 
 ## A successful plot
 
+From **Lipshutz SE & Rosvall KA. 2021. Nesting strategy shapes
+territorial aggression but not testosterone: A comparative approach in
+female and male birds.** Published in *Hormones and Behavior*.
+
+![successful](https://github.com/rsimberloff/MICR_575/blob/master/hw_6_files/successful.jpg?raw=true)
+
+#### Description
+
+This is a box plot (`geom_boxplot`) overlaid with a scatter plot
+(`geom_point`).
+
+Each point represents testosterone level in an individual bird.  
+\* *x*-axis is mapped to the bird species (4 levels) and is further
+subsetted by sex (categorical, un-ordered)  
+\* *y*-axis is mapped to the level of testosterone in circulation
+(continuous, log-transformed)  
+\* color is mapped to sex
+
 ## An unsuccessful plot
 
-From **Clink, DJ, Ahmad, AH, and Klinck H. 2020. Brevity is not a
-constant in animal communication: evidence for compression depends on
-the unit of analysis in small ape vocalizations.**
+From **Clink DJ, Ahmad AH, and Klinck H. 2020. Brevity is not a constant
+in animal communication: evidence for compression depends on the unit of
+analysis in small ape vocalizations.** Published in *Royal Society Open
+Science*.
 
 ![unsuccessful](https://github.com/rsimberloff/MICR_575/blob/master/hw_6_files/unsuccessful.png?raw=true)
 
@@ -16,12 +35,13 @@ the unit of analysis in small ape vocalizations.**
 This is a scatterplot (`geom_point`) with a regression line
 (`geom_smooth`).
 
-Each point represents a vocalized phrase by a gibbon. \* *x*-axis is
-mapped to the number of notes in a phrase (continuous data,
-log-transformed) \* *y*-axis is mapped to the mean duration of notes in
-the phrase (continuous data, log-transformed) \* Point color is mapped
-to the individual gibbon who made the phrase (categorical data,
-un-ordered)
+Each point represents a vocalized phrase by a gibbon.  
+\* *x*-axis is mapped to the number of notes in a phrase (continuous
+data, log-transformed)  
+\* *y*-axis is mapped to the mean duration of notes in the phrase
+(continuous data, log-transformed)  
+\* Point color is mapped to the individual gibbon who made the phrase
+(categorical data, un-ordered)
 
 #### Evaluation
 
