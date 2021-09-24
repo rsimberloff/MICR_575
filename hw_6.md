@@ -9,6 +9,8 @@ From **Clink, DJ, Ahmad, AH, and Klinck H. 2020. Brevity is not a
 constant in animal communication: evidence for compression depends on
 the unit of analysis in small ape vocalizations.**
 
+![unsuccessful](https://github.com/rsimberloff/MICR_575/blob/master/hw_6_files/unsuccessful.png?raw=true)
+
 #### Description
 
 This is a scatterplot (`geom_point`) with a regression line
@@ -27,7 +29,7 @@ un-ordered)
 *Too many colors.*  
 The authors have given each of **13** different factor levels a
 different color. As Wilke points out, qualitative color scales work best
-when there are 3 to 5 colors. here, it’s barely possible to distinguish
+when there are 3 to 5 colors. Here, it’s barely possible to distinguish
 the different levels, and matching each point to a color in the legend
 involves a lot of squinting and uncertainty. This is worsened by their
 decision to make the points transparent.
@@ -65,16 +67,21 @@ solution if they fixed the color problem.
 From the text, it seems the authors intended this plot to make the point
 that note duration decreases as the number of notes in a phrase
 increases (“Menzerath’s Law, tah-dah!”). However, I don’t think the plot
-communicates what the authors intended – it mostly made me question
-their analysis & data set.
+communicates this effectively – it mostly made me question their
+analysis & data set.
 
 **Why is it wrong?**  
 *Linear axis labels for log-transformed data.*  
-The authors are showing log-transformed data but failed to change the
-*x*-axis ticks & labels. This is particularly noticeable because “number
-of notes in a phrase” can only have integer values. As-is, the plot
-leaves you wondering, “what is a fraction of a note?”
+The authors are showing log-transformed data but don’t seem to have
+changed the *x*-axis ticks & labels? This is particularly noticeable
+because “number of notes in a phrase” can only have integer values.
+As-is, the plot implies that you can have a fraction of a note, which is
+meaningless here.
 
-*Mystifying x-axis label*  
-The *x*-axis starts at “0”, and implies that a phrase with no notes at
-all somehow has a high mean note duration.
+*Mystifying axis labels*  
+The transformation should be included in the axis label, not just the
+caption. The *x*-axis starts at “0”, and implies that a phrase with no
+notes at all somehow has a high mean note duration. The *y*-axis
+suggests that phrase duration is somehow negative. You can figure out
+what the authors mean from the caption, but the plot as it stands is
+inaccurate.
