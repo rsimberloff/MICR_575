@@ -5,17 +5,17 @@ output: github_document
 
 
 ## A successful plot
+From **Lipshutz SE & Rosvall KA. 2021. Nesting strategy shapes territorial aggression but not testosterone: A comparative approach in female and male birds.** Published in *Hormones and Behavior*.
 
 
-
-
+![successful](https://github.com/rsimberloff/MICR_575/blob/master/hw_6_files/successful.jpg?raw=true)
 
 
 
 
 ## An unsuccessful plot
 
-From **Clink, DJ, Ahmad, AH, and Klinck H. 2020. Brevity is not a constant in animal communication: evidence for compression depends on the unit of analysis in small ape vocalizations.**
+From **Clink DJ, Ahmad AH, and Klinck H. 2020. Brevity is not a constant in animal communication: evidence for compression depends on the unit of analysis in small ape vocalizations.** Published in *Royal Society Open Science*.
 
 ![unsuccessful](https://github.com/rsimberloff/MICR_575/blob/master/hw_6_files/unsuccessful.png?raw=true)
 
