@@ -1,0 +1,108 @@
+---
+title: "Homework 7: BAD PLOT!"
+output: github_document
+---
+
+## Bad plot
+```{r bad_plot, message=FALSE, warning=FALSE}
+
+library(tidyverse)
+library(ggmap)
+
+## Import data
+data <- read.csv("hw_7_data.csv")
+glimpse(data)
+
+## Get map
+bad.map <- good.map <- get_map(center=c(-122.6, 37.9), source = "stamen", maptype = "watercolor", zoom =10)
+
+## Plot data
+ggmap(bad.map)  +
+  geom_point(data = data, mapping = aes(x = jitter(WEST.COORD, amount = .1), y = jitter(NORTH.COOR, amount = .06), color = Laeq, fill = trill.bw, shape = Type, size = Dialect), stroke = 3) +
+  scale_shape_manual(values = c(21, 22)) +
+  scale_colour_distiller(palette = "YlOrRd", direction = 1) +
+  scale_fill_distiller(palette = "BuGn", direction = 1)
+
+```
+
+
+
+
+
+
+
+## Marginally better plot
+```{r marginally_better_plot, message=FALSE, warning=FALSE}
+## Setup
+library(tidyverse)
+library(ggmap)
+library(cowplot)
+
+## Create a summary data frame -- mean background noise for each dialect
+dialect.summary <- data %>%
+  group_by(Dialect) %>%
+  summarize(mean = mean(Laeq), lon = mean(WEST.COORD), lat = mean(NORTH.COOR))
+glimpse (dialect.summary)
+
+## Make maps! One for each dialect. Would be easier in qGIS
+presidio <- ggmap(get_map(center=c(-122.4751, 37.80025), source = "stamen", maptype = "toner-lite", zoom = 15))
+lame <- ggmap(get_map(center=c(-122.5015, 37.71755), source = "stamen", maptype = "toner-lite", zoom = 15))
+richmond <- ggmap(get_map(center=c(-122.3435, 37.90985), source = "stamen", maptype = "toner-lite", zoom = 15))
+commonweal <- ggmap(get_map(center=c(-122.7240, 37.91065), source = "stamen", maptype = "toner-lite", zoom = 15))
+limantour <- ggmap(get_map(center=c(-122.8828, 38.02837), source = "stamen", maptype = "toner-lite", zoom = 15))
+abla  <- ggmap(get_map(center=c(-122.9448, 38.12043), source = "stamen", maptype = "toner-lite", zoom = 15))
+
+
+SF <- presidio +
+  geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
+  scale_color_distiller(palette = "OrRd") +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
+  labs(title = "San Francisco", subtitle = "Mean noise (dB) = 56.00", y = "URBAN")
+
+SF.LM <- lame +
+  geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
+  scale_color_distiller(palette = "OrRd") +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
+  labs(title = "Lake Merced", subtitle = "Mean noise (dB) = 55.16")
+
+berkeley <- richmond +
+  geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
+  scale_color_distiller(palette = "OrRd") +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
+  labs(title = "Berkeley", subtitle = "Mean noise (dB) = 51.29")
+
+clear <- commonweal +
+  geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
+  scale_color_distiller(palette = "OrRd") +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
+  labs(title = "Clear", subtitle = "Mean noise (dB) = 48.20", y = "RURAL")
+
+lima <- limantour +
+  geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
+  scale_color_distiller(palette = "OrRd") +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
+  labs(title = "Limantour", subtitle = "Mean noise (dB) = 47.57")
+
+mcclure <- abla +
+  geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
+  scale_color_distiller(palette = "OrRd") +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
+  labs(title = "McClure", subtitle = "Mean noise (dB) = 43.53")
+
+
+## A dummy plot to extract the legend from...
+dummyplot <- ggplot(data, aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw)) +
+  geom_point() +
+  scale_color_distiller(palette = "OrRd", name = "Trill bandwidth (Hz)")
+
+
+## Can't facet wrap this, so I'm arranging with ggdraw and the package cowplot
+toprow <- plot_grid(SF, SF.LM, berkeley, align = "h", axis = "b", ncol = 3)
+bottomrow <- plot_grid(clear, lima, mcclure, align = "h", axis = "b", ncol = 3)
+
+legend <- get_legend(dummyplot)
+
+ggdraw(plot_grid(plot_grid(toprow, bottomrow, ncol=1, align='v'),
+                 plot_grid(NULL, legend, ncol=1),
+                 rel_widths=c(1, 0.2)))
+```
