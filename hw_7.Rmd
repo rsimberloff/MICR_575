@@ -62,14 +62,14 @@ SF <- presidio +
 SF.LM <- lame +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
   scale_color_distiller(palette = "OrRd") +
-  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
-  labs(title = "Lake Merced", subtitle = "Mean noise (dB) = 55.16")
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
+  labs(title = "Lake Merced", subtitle = "Mean noise (dB) = 55.16", y = "")
 
 berkeley <- richmond +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
   scale_color_distiller(palette = "OrRd") +
-  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
-  labs(title = "Berkeley", subtitle = "Mean noise (dB) = 51.29")
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
+  labs(title = "Berkeley", subtitle = "Mean noise (dB) = 51.29", y = "")
 
 clear <- commonweal +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
@@ -80,29 +80,29 @@ clear <- commonweal +
 lima <- limantour +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
   scale_color_distiller(palette = "OrRd") +
-  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
-  labs(title = "Limantour", subtitle = "Mean noise (dB) = 47.57")
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
+  labs(title = "Limantour", subtitle = "Mean noise (dB) = 47.57", y = "")
 
 mcclure <- abla +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
   scale_color_distiller(palette = "OrRd") +
-  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), legend.position = "none") +
-  labs(title = "McClure", subtitle = "Mean noise (dB) = 43.53")
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
+  labs(title = "McClure", subtitle = "Mean noise (dB) = 43.53", y = "")
 
 
 ## A dummy plot to extract the legend from...
 dummyplot <- ggplot(data, aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw)) +
   geom_point() +
-  scale_color_distiller(palette = "OrRd", name = "Trill bandwidth (Hz)")
+  scale_color_distiller(palette = "OrRd", name = str_wrap("Trill bandwidth (Hz)", width = 3))
 
 
 ## Can't facet wrap this, so I'm arranging with ggdraw and the package cowplot
-toprow <- plot_grid(SF, SF.LM, berkeley, align = "h", axis = "b", ncol = 3)
-bottomrow <- plot_grid(clear, lima, mcclure, align = "h", axis = "b", ncol = 3)
+toprow <- plot_grid(SF, SF.LM, berkeley, align = "h", axis = "bt", ncol = 3)
+bottomrow <- plot_grid(clear, lima, mcclure, align = "h", axis = "bt", ncol = 3)
 
 legend <- get_legend(dummyplot)
 
 ggdraw(plot_grid(plot_grid(toprow, bottomrow, ncol=1, align='v'),
                  plot_grid(NULL, legend, ncol=1),
-                 rel_widths=c(1, 0.2)))
+                 rel_widths=c(1, .15), greedy = FALSE))
 ```
