@@ -43,7 +43,57 @@ ggmap(bad.map)  +
 
 ![](hw_7_files/figure-gfm/bad_plot-1.png)<!-- -->
 
+#### Analysis
+
+The gimmicky watercolor map was *probably* not the best choice. It lacks
+detail and the colors are garish.
+
+There are too many aesthetic mappings for the map data to be at all
+comprehensible; not only is point position mapped to latitude and
+longitude, but each point also has a **shape** mapping (habitat type),
+**size** mapping (song dialect), and not one but **two color** mappings
+– an inner fill color mapped to trill bandwidth, and an outline color
+mapped to background noise.
+
+Though it would be acceptable to map either trill bandwidth or
+background noise to a continuous color scale, the color combination is
+difficult to interpret (and to look at). The colors chosen for these two
+color scales are not only as unfriendly as possible to colorblind
+viewers, but also unhelpfully match the over-the-top map colors.
+
+The shape mapping is pointless, as the habitat types do not overlap
+anywhere on the map.
+
+The size mapping is an absolutely terrible choice to distinguish among
+song dialects, which are unordered factor levels. Not only does the size
+scale give a false impression of both ordered and continuous data, but
+it’s also impossible to distinguish most of the sizes. The large size of
+many of the points also exacerbates the bad overplotting.
+
+The greatest sin in this horrible graphic is the way it addresses
+overplotting: it jitters the points. While slight jitter may be
+appropriate in a scatterplot, datapoints on a map are supposed to accord
+with an actual geographical position and jittering them is a dishonest
+representation of the data. Moreover, good jitter is supposed to happen
+on a small enough scale that it doesn’t alter the interpretation of the
+data. Here the points are jittered by as much as 0.1 degrees – the
+equivalent of nearly seven miles. This makes it look as though birds
+were sampled continuously across the Bay Area (including, apparently, in
+the Pacific Ocean), when in reality they were sampled from 6 discrete
+study sites.
+
 ## Marginally better plot
+
+The premise of this plot isn’t great, as it’s probably too much data to
+include in one figure, but let’s try to fix it.
+
+Unjittered, the points wouldn’t show up clearly at this scale, since
+they’re concentrated in 6 small study sites. I’ll therefore facet the
+map into 6 more zoomed-in maps of these study sites. Of course, I will
+change the base map to something less gaudy and more informative. I’ll
+pull out the aesthetic mappings for habitat type (urban/rural), song
+dialect, and background noise and instead include it as a text label on
+the faceted grid.
 
 ``` r
 ## Setup
@@ -67,47 +117,47 @@ glimpse (dialect.summary)
 
 ``` r
 ## Make maps! One for each dialect. Would be easier in qGIS
-presidio <- ggmap(get_map(center=c(-122.4751, 37.80025), source = "stamen", maptype = "toner-lite", zoom = 15))
-lame <- ggmap(get_map(center=c(-122.5015, 37.71755), source = "stamen", maptype = "toner-lite", zoom = 15))
-richmond <- ggmap(get_map(center=c(-122.3435, 37.90985), source = "stamen", maptype = "toner-lite", zoom = 15))
-commonweal <- ggmap(get_map(center=c(-122.7240, 37.91065), source = "stamen", maptype = "toner-lite", zoom = 15))
-limantour <- ggmap(get_map(center=c(-122.8828, 38.02837), source = "stamen", maptype = "toner-lite", zoom = 15))
-abla  <- ggmap(get_map(center=c(-122.9448, 38.12043), source = "stamen", maptype = "toner-lite", zoom = 15))
+presidio <- ggmap(get_map(center=c(-122.4751, 37.80025), source = "stamen", maptype = "terrain", zoom = 15))
+lame <- ggmap(get_map(center=c(-122.5015, 37.71755), source = "stamen", maptype = "terrain", zoom = 15))
+richmond <- ggmap(get_map(center=c(-122.3435, 37.90985), source = "stamen", maptype = "terrain", zoom = 15))
+commonweal <- ggmap(get_map(center=c(-122.7240, 37.91065), source = "stamen", maptype = "terrain", zoom = 15))
+limantour <- ggmap(get_map(center=c(-122.8828, 38.02837), source = "stamen", maptype = "terrain", zoom = 15))
+abla  <- ggmap(get_map(center=c(-122.9448, 38.12043), source = "stamen", maptype = "terrain", zoom = 15))
 
 
 SF <- presidio +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
-  scale_color_distiller(palette = "OrRd") +
+  scale_color_distiller(palette = "RdPu") +
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
   labs(title = "San Francisco", subtitle = "Mean noise (dB) = 56.00", y = "URBAN")
 
 SF.LM <- lame +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
-  scale_color_distiller(palette = "OrRd") +
+  scale_color_distiller(palette = "RdPu") +
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
   labs(title = "Lake Merced", subtitle = "Mean noise (dB) = 55.16", y = "")
 
 berkeley <- richmond +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
-  scale_color_distiller(palette = "OrRd") +
+  scale_color_distiller(palette = "RdPu") +
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
   labs(title = "Berkeley", subtitle = "Mean noise (dB) = 51.29", y = "")
 
 clear <- commonweal +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
-  scale_color_distiller(palette = "OrRd") +
+  scale_color_distiller(palette = "RdPu") +
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
   labs(title = "Clear", subtitle = "Mean noise (dB) = 48.20", y = "RURAL")
 
 lima <- limantour +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
-  scale_color_distiller(palette = "OrRd") +
+  scale_color_distiller(palette = "RdPu") +
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
   labs(title = "Limantour", subtitle = "Mean noise (dB) = 47.57", y = "")
 
 mcclure <- abla +
   geom_point(data = data, mapping = aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw), size = 2.5) +
-  scale_color_distiller(palette = "OrRd") +
+  scale_color_distiller(palette = "RdPu") +
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title.x = element_blank(), legend.position = "none") +
   labs(title = "McClure", subtitle = "Mean noise (dB) = 43.53", y = "")
 
@@ -115,7 +165,7 @@ mcclure <- abla +
 ## A dummy plot to extract the legend from...
 dummyplot <- ggplot(data, aes(x = WEST.COORD, y = NORTH.COOR, color = trill.bw)) +
   geom_point() +
-  scale_color_distiller(palette = "OrRd", name = str_wrap("Trill bandwidth (Hz)", width = 3))
+  scale_color_distiller(palette = "RdPu", name = str_wrap("Trill bandwidth (Hz)", width = 3))
 
 
 ## Can't facet wrap this, so I'm arranging with ggdraw and the package cowplot
