@@ -27,6 +27,13 @@ type (urban/rural), explain any of the variation in territory size. I
 also hope to visualize the results of this analysis, but may have to do
 so in a more specialized spatial software like qGIS.
 
+### Expected technical challenges
+
+I have never analysed spatial data. I’m unfamiliar with the specialized
+data classes necessary for this analysis
+(e.g. `sp::SpatialPointsDataFrame`) and am new to virtually every aspect
+of the packages designed to handle these data (e.g. `adehabitatHR`).
+
 ### What will the finished project look like?
 
 The finished project will look like a simplified first draft of a
