@@ -207,3 +207,36 @@ ggplot(summary) +
 
 Since the Monod model had lower AIC values than the square-root model
 across all the runs, it’s probably a better fit for these data.
+
+## Extra credit
+
+``` r
+library(modelr)
+
+m1 <- nls2(formula(density ~ beta_1 * sqrt(conc) + beta_0),
+        data = DNase,
+        start = list(beta_1 = 0.5, beta_0 = 0.1))
+
+m2 <- nls2(formula(density ~ (conc * beta_1)/(conc + beta_0)),
+       data = DNase,
+       start = list(beta_1 = 2, beta_0 = 0.5))
+        
+        
+DNase_pred <- DNase %>%
+  gather_predictions(m1, m2)
+
+
+ggplot(data = DNase_pred) +
+  geom_point(aes(x = conc, y = density)) +
+  geom_smooth(aes(x = conc, y = density), size = 2, color = "black") +
+  geom_smooth(aes(x = conc, y = pred, color = model), linetype = "dashed") +
+  scale_color_discrete(labels = c("Square-root model","Monod model")) +
+  labs(color = "Predicted values",
+       x = "Protein concentration",
+       y = "Optical density")
+```
+
+    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+
+![](hw_8_files/figure-gfm/predictions-1.png)<!-- -->
