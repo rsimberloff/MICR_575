@@ -1,0 +1,139 @@
+---
+title: "Homework 8"
+output: github_document
+---
+
+## Question 1
+Using the `diamonds` data set, make a data frame that shows the slope of the relationship of price as a function of weight (carat) for each unique color, in decreasing order of slope.
+
+``` {r setup_Q1, message=FALSE, echo=FALSE}
+library(tidyverse)
+data("diamonds")
+```
+
+
+Visualizing as a first step, to conceptualize what I'm supposed to do
+``` {r visualize_Q1, message = FALSE}
+ ggplot(diamonds) +
+  geom_smooth(aes(x = carat,
+                  y = price,
+                  color = color),
+              method = lm)
+```
+
+Make the data frame:
+``` {r Q1, warning = FALSE}
+# Nest data (each row is a group)
+by_color <- diamonds %>%
+  group_by(color) %>%
+  nest()
+
+# Make a function that runs the model I want
+price.carat.model <- function(df) {
+  lm(price ~ carat, data = df)
+}
+
+# Apply the function to every group in my nested data frame
+models <- map(by_color$data, price.carat.model)
+
+# Add the list of models to my data frame
+by_color <- by_color %>%
+  mutate(model = map(data, price.carat.model))
+by_color
+
+# Expand the model contents into columns
+model_by_color <- by_color %>%
+  mutate(tidy = map(model, broom::tidy)) %>%
+  unnest(tidy, .drop = TRUE) %>%
+  filter(term == "carat")
+model_by_color
+
+# Create final data frame
+model_by_color %>%
+  summarise(price.per.carat = estimate) %>%
+  arrange(desc(price.per.carat))
+```
+
+
+## Question 2: nonlinear least squares models
+### Fitting nonlinear models
+
+
+```{r setup_Q2}
+library(nls2) ## "Non-linear regression with brute force"
+data("DNase") ## ELISA band optical density as a function of protein concentration, for 12 different runs
+glimpse(DNase)
+```
+
+Visualize the data
+``` {r visualize_Q2}
+ggplot(DNase) +
+  geom_point(aes(x = conc,
+                 y = density))
+```
+
+Use list-columns to create a separate square root model and Monod model for density as a function of concentration, for each run. Extract AIC scores to evaluate model quality.
+```{r Q2}
+# Nest data
+by_run <- DNase %>%
+  group_by(Run) %>%
+  nest()
+
+# Write functions for the two models
+sqrt.mod <- function(df) {
+  nls2(formula(density ~ beta_1 * sqrt(conc) + beta_0),
+        data = df,
+        start = list(beta_1 = 0.5, beta_0 = 0.1))
+}
+
+monod.mod <- function(df) {
+  nls2(formula(density ~ (conc * beta_1)/(conc + beta_0)),
+       data = df,
+       start = list(beta_1 = 2, beta_0 = 0.5))
+}
+
+
+# Apply my two models to every group in my data frame
+
+sqrt_models <- map(by_run$data, sqrt.mod)
+monod_models <- map(by_run$data, sqrt.mod)
+
+# Add the lists of models to my data frame
+
+by_run <- by_run %>%
+  mutate(sqrt.model = map(data, sqrt.mod), 
+         monod.model = map(data, monod.mod))
+by_run
+
+# Expand model contents into columns
+## Use broom::glance to extract AIC 
+
+models_by_run <- by_run %>%
+  mutate(glance.sqrt = map(sqrt.model, broom::glance),
+         glance.monod = map(monod.model, broom::glance)) %>%
+  unnest(c(glance.sqrt, glance.monod), .drop = TRUE)
+
+
+
+summary <- models_by_run %>%
+  select(Run, AIC, AIC1)
+
+```
+
+Make a plot of AIC scores for each model for each run
+```{r visualization}
+
+ggplot(summary) +
+  geom_point(aes(x = as.integer(Run), y = AIC), size = 2.5, color = "red") +
+  geom_point(aes(x = as.integer(Run), y = AIC1), size = 2.5) +
+  annotate("text", x = 4, y = -38, label = "Square-root model", color = "red") +
+  annotate("text", x = 4, y = -63, label = "Monod model") +
+  scale_x_continuous(name = "Run", breaks = c(1:11)) +
+  theme_minimal()
+```
+
+Since the Monod model had lower AIC values than the square-root model across all the runs, it's probably a better fit for these data.
+
+
+
+
